@@ -1,0 +1,51 @@
+[
+  {
+    "id": "0",
+    "title": "Notebook",
+    "price": 4500,
+    "img": "./assets/notebook-1.jpg",
+    "estrelas": 4
+  },
+  {
+    "id": "1",
+    "title": "Fone Headset",
+    "price": 198,
+    "img": "./assets/fone-1.jpg",
+    "estrelas": 3
+  },
+  {
+    "id": "2",
+    "title": "Notebook i7",
+    "price": 3257,
+    "img": "./assets/notebook-2.jpg",
+    "estrelas": 5
+  },
+  {
+    "id": "3",
+    "title": "Notebook Intel",
+    "price": 3800,
+    "img": "./assets/notebook-3.jpg",
+    "estrelas": 5
+  },
+  {
+    "id": "4",
+    "title": "Headphone Mic",
+    "price": 159,
+    "img": "./assets/fone-2.jpg",
+    "estrelas": 3
+  },
+  {
+    "id": "5",
+    "title": "Smart TV Samsung",
+    "price": 2990,
+    "img": "./assets/tv-2.jpg",
+    "estrelas": 4
+  },
+  {
+    "id": "6",
+    "title": "Smart TV Philco",
+    "price": 2230,
+    "img": "./assets/tv-1.jpg",
+    "estrelas": 5
+  }
+]
