@@ -13,6 +13,12 @@
 <script>
 export default {
   name: "Header",
+
+  setup() {
+    const quantityBag = "ok";
+
+    return { quantityBag };
+  },
 };
 </script>
 

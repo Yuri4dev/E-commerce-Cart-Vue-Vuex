@@ -1,12 +1,16 @@
 <template>
   <div v-if="loading == false" class="home container">
     <h1>Home App</h1>
-    <main class="container-produtos">
-      <div class="produto" v-for="produto in produtos" :key="produto.id">
-        <img :src="produto.img" :alt="produto.img + produto.title" />
-        <h4>{{ produto.title }}</h4>
-        <p>{{ produto.price }}</p>
-        <button @click="addBag(produto)">Adicionar ao carrinho</button>
+    <main class="container-products">
+      <div class="product" v-for="product in products" :key="product.id">
+        <img
+          class="product-img"
+          :src="product.img"
+          :alt="product.img + product.title"
+        />
+        <h4>{{ product.title }}</h4>
+        <p>{{ product.price }}</p>
+        <button @click="addBag(product)">Adicionar ao carrinho</button>
       </div>
     </main>
   </div>
@@ -27,7 +31,7 @@ export default {
   },
 
   setup() {
-    const produtos = reactive([]);
+    const products = reactive([]);
     const store = useStore();
     const loading = ref(false);
 
@@ -36,7 +40,7 @@ export default {
     api
       .get("/")
       .then((response) => {
-        produtos.push(...response.data);
+        products.push(...response.data);
         loading.value = false;
       })
       .catch((error) => {
@@ -45,12 +49,11 @@ export default {
       });
 
     // Envia o commit com o produto
-    const addBag = (produto) => {
-      store.dispatch("dataProduct", produto);
-      console.log(produto);
+    const addBag = (product) => {
+      store.dispatch("dataProduct", product, []);
     };
 
-    return { produtos, addBag, loading };
+    return { products, addBag, loading };
   },
 };
 </script>
@@ -59,24 +62,24 @@ export default {
 .home {
   text-align: center;
 }
-.container-produtos {
+.container-products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   margin-top: 20px;
   grid-gap: 30px;
 
-  img {
+  .product-img {
     height: 200px;
     width: 300px;
   }
-  .produto {
+  .product {
     box-shadow: 0px 2px 4px rgba(30, 60, 90, 0.2);
     padding-bottom: 20px;
   }
 }
 @media (max-width: 690px) {
-  .container-produtos {
+  .container-products {
     grid-template-columns: 1fr;
     padding: 20px;
   }
