@@ -12,7 +12,6 @@ export default createStore({
   actions: {
     dataProduct(context, payload) {
       context.commit("SET_BAG", payload);
-      localStorage.setItem("Products", JSON.stringify(this.state.bag));
     },
   },
   modules: {},

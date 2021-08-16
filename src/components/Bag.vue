@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1 style="text-align:center;">Carrinho</h1>
-    <table class="container" border="1">
+    <table v-if="bag.length !== 0" class="container" border="1">
       <thead>
         <tr>
           <th>Items</th>
@@ -23,7 +23,11 @@
           </td>
           <td>R$ {{ product.price }}</td>
           <td>
-            <img src="../assets/trash.svg" alt="Excluir produto" />
+            <img
+              @click="remove(product)"
+              src="../assets/trash.svg"
+              alt="Excluir produto"
+            />
           </td>
         </tr>
       </tbody>
@@ -35,22 +39,29 @@
         </tr>
       </tfoot>
     </table>
+    <!--  -->
+    <h3 v-else>Não há produtos no carrinho</h3>
   </div>
 </template>
 
 <script>
 import { reactive } from "vue";
+import { useStore } from "vuex";
 
 export default {
   name: "Bag",
 
   setup() {
-    const local = JSON.parse(localStorage.getItem("Products"));
-    const bag = reactive(local);
+    const StoreBag = useStore().state.bag;
+    const bag = reactive(StoreBag);
 
-    console.log(bag);
+    //Remove o produto da bag
+    const remove = (product) => {
+      var index = bag.indexOf(product);
+      bag.splice(index, 1);
+    };
 
-    return { local, bag };
+    return { bag, remove };
   },
 };
 </script>
@@ -76,5 +87,9 @@ table {
       margin: 5px auto;
     }
   }
+}
+h3 {
+  text-align: center;
+  margin-top: 20px;
 }
 </style>

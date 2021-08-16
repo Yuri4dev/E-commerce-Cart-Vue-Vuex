@@ -50,7 +50,7 @@ export default {
 
     // Envia o commit com o produto
     const addBag = (product) => {
-      store.dispatch("dataProduct", product, []);
+      store.dispatch("dataProduct", product);
     };
 
     return { products, addBag, loading };
