@@ -10,6 +10,7 @@
           <th scope="col"></th>
         </tr>
       </thead>
+
       <tbody v-for="product in bag" :key="product.id">
         <tr>
           <th scope="row">
@@ -17,11 +18,19 @@
             <img :src="product.img" alt="Foto do produto" />
           </th>
           <td>
-            <img src="../assets/up.svg" alt="Aumentar quantidade" />
-            {{ (product.quantity = 1) }}
-            <img src="../assets/down.svg" alt="Diminuir quantidade" />
+            <img
+              src="../assets/up.svg"
+              @click="addProduct"
+              alt="Aumentar quantidade"
+            />
+            {{ quantity }}
+            <img
+              src="../assets/down.svg"
+              @click="removeProduct"
+              alt="Diminuir quantidade"
+            />
           </td>
-          <td>R$ {{ product.price }}</td>
+          <td>R$ {{ product.price * quantity }}</td>
           <td>
             <img
               @click="remove(product)"
@@ -31,10 +40,11 @@
           </td>
         </tr>
       </tbody>
+
       <tfoot>
         <tr>
           <th scope="row">Totals</th>
-          <th>21,000</th>
+          <th>R$ {{ total() * quantity }}</th>
           <td></td>
         </tr>
       </tfoot>
@@ -45,7 +55,7 @@
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useStore } from "vuex";
 
 export default {
@@ -54,6 +64,17 @@ export default {
   setup() {
     const StoreBag = useStore().state.bag;
     const bag = reactive(StoreBag);
+    const quantity = ref(1);
+
+    //Aumenta quantidade do produto
+    const addProduct = () => {
+      bag.map((item) => (item.quantity = quantity.value++));
+    };
+
+    //Diminui quantidade do produto
+    const removeProduct = () => {
+      bag.map((item) => (item.quantity = quantity.value--));
+    };
 
     //Remove o produto da bag
     const remove = (product) => {
@@ -61,7 +82,11 @@ export default {
       bag.splice(index, 1);
     };
 
-    return { bag, remove };
+    //Total dos produtos da bag
+    const total = () =>
+      bag.map((item) => item.price).reduce((total, preco) => total + preco);
+
+    return { bag, remove, total, addProduct, removeProduct, quantity };
   },
 };
 </script>
@@ -85,6 +110,7 @@ table {
   td {
     img {
       margin: 5px auto;
+      cursor: pointer;
     }
   }
 }
